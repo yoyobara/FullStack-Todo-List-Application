@@ -5,6 +5,7 @@
 const express = require("express");
 //Create Port
 const port = process.env.PORT || 8000;
+const host = process.env.HOST || "0.0.0.0";
 //Create Express App for Request-Response Cycle & to create the Express Server
 const app = express();
 //Require Module Path for Directory
@@ -53,7 +54,7 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 //Run the ExpressJS Server
-app.listen(port, (err) => {
+app.listen(port, host, (err) => {
   if (err) {
     console.log(err);
     return;

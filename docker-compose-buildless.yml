@@ -13,6 +13,7 @@ services:
       DB: mongodb://root:password@mongodb:27017
       DB_NAME: todo_list
       PORT: 8000
+      HOST: "0.0.0.0"
     depends_on:
       - mongodb
 
