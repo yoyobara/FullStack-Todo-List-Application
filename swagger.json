@@ -3,21 +3,24 @@
   "info": {
     "title": "Todo List API",
     "version": "1.0.0",
-    "description": "REST API for managing tasks in the todo list application"
+    "description": "REST API for managing tasks in the todo list application. Supports full CRUD operations for task management."
   },
   "servers": [
     {
       "url": "http://localhost:8000",
-      "description": "Local server"
+      "description": "Local development server"
     }
   ],
   "paths": {
     "/api/tasks": {
       "get": {
         "summary": "List all tasks",
+        "description": "Retrieves a list of all tasks in the system",
+        "operationId": "listTasks",
+        "tags": ["Tasks"],
         "responses": {
           "200": {
-            "description": "An array of tasks",
+            "description": "Successfully retrieved list of tasks",
             "content": {
               "application/json": {
                 "schema": {
@@ -25,43 +28,100 @@
                   "items": {
                     "$ref": "#/components/schemas/Task"
                   }
-                }
+                },
+                "example": [
+                  {
+                    "_id": "507f1f77bcf86cd799439011",
+                    "task": "Complete project proposal",
+                    "description": "Finish writing the Q1 project proposal for the marketing team",
+                    "priority": "high",
+                    "category": "work",
+                    "date": "2026-03-15",
+                    "completed": false
+                  },
+                  {
+                    "_id": "507f1f77bcf86cd799439012",
+                    "task": "Buy groceries",
+                    "description": "Milk, eggs, bread, and vegetables",
+                    "priority": "medium",
+                    "category": "personal",
+                    "date": "2026-02-28",
+                    "completed": true
+                  },
+                  {
+                    "_id": "507f1f77bcf86cd799439013",
+                    "task": "Review code pull requests",
+                    "description": "Review pending PRs from team members",
+                    "priority": "high",
+                    "category": "work",
+                    "date": "2026-03-01",
+                    "completed": false
+                  }
+                ]
               }
             }
           },
           "500": {
-            "description": "Server error"
+            "description": "Internal server error"
           }
         }
       },
       "post": {
         "summary": "Create a new task",
+        "description": "Creates a new task with the provided details",
+        "operationId": "createTask",
+        "tags": ["Tasks"],
         "requestBody": {
           "required": true,
+          "description": "Task object that needs to be created",
           "content": {
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/TaskInput"
+              },
+              "example": {
+                "task": "Prepare quarterly report",
+                "description": "Complete the Q1 financial report and submit to finance team",
+                "priority": "high",
+                "category": "work",
+                "date": "2026-03-31",
+                "completed": false
               }
             }
           }
         },
         "responses": {
           "201": {
-            "description": "Task created",
+            "description": "Task created successfully",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Task"
+                },
+                "example": {
+                  "_id": "507f1f77bcf86cd799439014",
+                  "task": "Prepare quarterly report",
+                  "description": "Complete the Q1 financial report and submit to finance team",
+                  "priority": "high",
+                  "category": "work",
+                  "date": "2026-03-31",
+                  "completed": false
                 }
               }
             }
           },
           "400": {
-            "description": "Invalid input"
+            "description": "Invalid input - missing required fields or invalid values",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Missing required field: priority"
+                }
+              }
+            }
           },
           "500": {
-            "description": "Server error"
+            "description": "Internal server error"
           }
         }
       }
@@ -72,68 +132,134 @@
           "name": "id",
           "in": "path",
           "required": true,
+          "description": "The unique identifier (MongoDB ObjectId) of the task",
           "schema": {
-            "type": "string"
+            "type": "string",
+            "example": "507f1f77bcf86cd799439011"
           }
         }
       ],
       "get": {
         "summary": "Get a task by ID",
+        "description": "Retrieves a single task by its unique identifier",
+        "operationId": "getTaskById",
+        "tags": ["Tasks"],
         "responses": {
           "200": {
-            "description": "A single task",
+            "description": "Successfully retrieved the task",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Task"
+                },
+                "example": {
+                  "_id": "507f1f77bcf86cd799439011",
+                  "task": "Complete project proposal",
+                  "description": "Finish writing the Q1 project proposal for the marketing team",
+                  "priority": "high",
+                  "category": "work",
+                  "date": "2026-03-15",
+                  "completed": false
                 }
               }
             }
           },
           "404": {
-            "description": "Task not found"
+            "description": "Task not found with the given ID",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Task not found"
+                }
+              }
+            }
           }
         }
       },
       "put": {
         "summary": "Update a task",
+        "description": "Updates an existing task with new information",
+        "operationId": "updateTask",
+        "tags": ["Tasks"],
         "requestBody": {
           "required": true,
+          "description": "Task object with updated information",
           "content": {
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/TaskInput"
+              },
+              "example": {
+                "task": "Complete project proposal",
+                "description": "Finish writing the Q1 project proposal - UPDATED deadline",
+                "priority": "high",
+                "category": "work",
+                "date": "2026-03-10",
+                "completed": true
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "Updated task",
+            "description": "Task updated successfully",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Task"
+                },
+                "example": {
+                  "_id": "507f1f77bcf86cd799439011",
+                  "task": "Complete project proposal",
+                  "description": "Finish writing the Q1 project proposal - UPDATED deadline",
+                  "priority": "high",
+                  "category": "work",
+                  "date": "2026-03-10",
+                  "completed": true
                 }
               }
             }
           },
           "400": {
-            "description": "Invalid input"
+            "description": "Invalid input - invalid field values or data type errors",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Invalid priority value"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Task not found"
+            "description": "Task not found with the given ID",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Task not found"
+                }
+              }
+            }
           }
         }
       },
       "delete": {
         "summary": "Delete a task",
+        "description": "Permanently removes a task from the system",
+        "operationId": "deleteTask",
+        "tags": ["Tasks"],
         "responses": {
           "204": {
-            "description": "Task deleted"
+            "description": "Task deleted successfully"
           },
           "404": {
-            "description": "Task not found"
+            "description": "Task not found with the given ID",
+            "content": {
+              "application/json": {
+                "example": {
+                  "error": "Task not found"
+                }
+              }
+            }
           }
         }
       }
@@ -143,25 +269,86 @@
     "schemas": {
       "Task": {
         "type": "object",
+        "description": "A task object representing a todo item",
         "properties": {
-          "_id": { "type": "string" },
-          "task": { "type": "string" },
-          "description": { "type": "string" },
-          "priority": { "type": "string" },
-          "category": { "type": "string" },
-          "date": { "type": "string" },
-          "completed": { "type": "boolean" }
-        }
+          "_id": {
+            "type": "string",
+            "description": "MongoDB unique identifier for the task",
+            "example": "507f1f77bcf86cd799439011"
+          },
+          "task": {
+            "type": "string",
+            "description": "The task title or main description",
+            "example": "Complete project proposal"
+          },
+          "description": {
+            "type": "string",
+            "description": "Detailed description of the task",
+            "example": "Finish writing the Q1 project proposal for the marketing team"
+          },
+          "priority": {
+            "type": "string",
+            "description": "Priority level of the task",
+            "enum": ["low", "medium", "high"],
+            "example": "high"
+          },
+          "category": {
+            "type": "string",
+            "description": "Category or project this task belongs to",
+            "enum": ["personal", "work", "study", "chores", "others"],
+            "example": "work"
+          },
+          "date": {
+            "type": "string",
+            "format": "date",
+            "description": "Due date for the task in YYYY-MM-DD format",
+            "example": "2026-03-15"
+          },
+          "completed": {
+            "type": "boolean",
+            "description": "Indicates whether the task has been completed",
+            "example": false
+          }
+        },
+        "required": ["_id", "task", "priority", "category", "date", "completed"]
       },
       "TaskInput": {
         "type": "object",
+        "description": "Input schema for creating or updating a task",
         "properties": {
-          "task": { "type": "string" },
-          "description": { "type": "string" },
-          "priority": { "type": "string" },
-          "category": { "type": "string" },
-          "date": { "type": "string" },
-          "completed": { "type": "boolean" }
+          "task": {
+            "type": "string",
+            "description": "The task title or main description",
+            "example": "Complete project proposal"
+          },
+          "description": {
+            "type": "string",
+            "description": "Detailed description of the task",
+            "example": "Finish writing the Q1 project proposal for the marketing team"
+          },
+          "priority": {
+            "type": "string",
+            "description": "Priority level of the task",
+            "enum": ["low", "medium", "high"],
+            "example": "high"
+          },
+          "category": {
+            "type": "string",
+            "description": "Category or project this task belongs to",
+            "enum": ["personal", "work", "study", "chores", "others"],
+            "example": "work"
+          },
+          "date": {
+            "type": "string",
+            "format": "date",
+            "description": "Due date for the task in YYYY-MM-DD format",
+            "example": "2026-03-15"
+          },
+          "completed": {
+            "type": "boolean",
+            "description": "Indicates whether the task has been completed",
+            "example": false
+          }
         },
         "required": ["task", "priority", "category", "date"]
       }
