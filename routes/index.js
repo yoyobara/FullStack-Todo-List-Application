@@ -12,6 +12,8 @@ const homeRouterFile = require("./home");
 const taskRouterFile = require("./tasks");
 //Require Tasks List Router File
 const taskListRouterFile = require("./task-list");
+//Require API Tasks Router
+const apiTasksRouter = require("./api/tasks");
 
 //Access the Home Router File on '/' route
 router.use("/", homeRouterFile);
@@ -19,6 +21,8 @@ router.use("/", homeRouterFile);
 router.use("/task-list", taskListRouterFile);
 //Access the Tasks Router File on '/tasks' route
 router.use("/tasks", taskRouterFile);
+//API namespace mounted after UI routes
+router.use("/api/tasks", apiTasksRouter);
 
 //Main Index Router Loaded
 console.log("Router Loaded");

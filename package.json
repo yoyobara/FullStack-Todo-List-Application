@@ -30,6 +30,7 @@
 		"express": "^4.17.3",
 		"express-ejs-layouts": "^2.5.1",
 		"mongoose": "^6.2.4",
-		"nodemon": "^2.0.15"
+		"nodemon": "^2.0.15",
+		"swagger-ui-express": "^4.6.3"
 	}
 }

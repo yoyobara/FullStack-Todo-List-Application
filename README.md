@@ -9,36 +9,53 @@
 
 This project is a Full Stack Todo List Application which is built using the MongoDB, NodeJS, ExpressJS, CSS, Javascript. It implements all the basic functionalities of a todo list, i.e, CRUD Operations (Create Read Update Delete).
 
--  Users are able to Create new tasks.
--  Users are able to Read the created tasks data.
--  Users are able to Complete the task by checking off the task with a strike through.
--  Users are able to Delete the task.
--  Users are able to Update the tasks with many customized options.
-   Users are able to View a Banner with current date-time.
--  Users can Check the count of remaining tasks, Complete all tasks together, Delete all completed tasks together.
--  Users can View All, Incomplete, Completed Tasks.
--  Users can mark Due Date & Priority Levels for the Tasks.
-   <br/>
-   <br/>
+- Users are able to Create new tasks.
+- Users are able to Read the created tasks data.
+- Users are able to Complete the task by checking off the task with a strike through.
+- Users are able to Delete the task.
+- Users are able to Update the tasks with many customized options.
+  Users are able to View a Banner with current date-time.
+- Users can Check the count of remaining tasks, Complete all tasks together, Delete all completed tasks together.
+- Users can View All, Incomplete, Completed Tasks.
+- Users can mark Due Date & Priority Levels for the Tasks.
+  <br/>
+  <br/>
 
 ## 🔥 Getting Started With The Project
 
--  Fork the Project in your Repository.
--  Clone the Forked Repository in your Local System.
--  Install & Configure - NodeJS, MongoDB, Robo3T.
--  Create '.env' file & Set the Environment Variables in it, as per the 'ENV_FORMAT.json' file.
--  Run 'npm install' in GitBash Terminal
--  Go to 'package.json' & inside the 'SCRIPTS', find "start":"...." <br/>
-   Change it to - "start": "nodemon index.js",
--  If you want to run the project in development mode locally then go to '.env' file & set,<br/>
-   ENVIRONMENT=development <br/>
-   DEPLOYMENT=local
--  If you want to run the project in production mode locally then go to '.env' file & set,<br/>
-   ENVIRONMENT=production <br/>
-   DEPLOYMENT=local
--  Change "module.exports = production" to "module.exports = development" or vice-versa in the 'environment.js' file as per the requirement.
--  Run 'npm start' in GitBash Terminal
--  Enjoy :)
+### 🛠 New REST API & Swagger Docs
+
+This project now exposes a **JSON REST API** under `/api/tasks` with full CRUD operations. An OpenAPI specification is served **as swagger UI** at `http://localhost:8000/api-docs` (and raw JSON at `/swagger.json`).
+
+Example usage:
+
+```bash
+curl http://localhost:8000/api/tasks
+curl -X POST http://localhost:8000/api/tasks \
+     -H "Content-Type: application/json" \
+     -d '{"task":"Buy milk","priority":"high","category":"home","date":"2026-02-28"}'
+```
+
+This sits alongside the existing server-rendered views, so previous functionality is unaffected.
+
+## 🔥 Getting Started With The Project
+
+- Fork the Project in your Repository.
+- Clone the Forked Repository in your Local System.
+- Install & Configure - NodeJS, MongoDB, Robo3T.
+- Create '.env' file & Set the Environment Variables in it, as per the 'ENV_FORMAT.json' file.
+- Run 'npm install' in GitBash Terminal
+- Go to 'package.json' & inside the 'SCRIPTS', find "start":"...." <br/>
+  Change it to - "start": "nodemon index.js",
+- If you want to run the project in development mode locally then go to '.env' file & set,<br/>
+  ENVIRONMENT=development <br/>
+  DEPLOYMENT=local
+- If you want to run the project in production mode locally then go to '.env' file & set,<br/>
+  ENVIRONMENT=production <br/>
+  DEPLOYMENT=local
+- Change "module.exports = production" to "module.exports = development" or vice-versa in the 'environment.js' file as per the requirement.
+- Run 'npm start' in GitBash Terminal
+- Enjoy :)
 
 For any issues related to the project, raise an ISSUE in the respective Repository.
 <br/>
@@ -56,24 +73,24 @@ For any issues related to the project, raise an ISSUE in the respective Reposito
 <img height="140" width="140" src="https://code.visualstudio.com/assets/apple-touch-icon.png">
 </p>
 
--  Library:
-   -  cors
-   -  dotenv
-   -  ejs
-   -  express
-   -  mongoose
-   -  nodemon
-   -  express-ejs-layouts
--  Framework: ExpressJS
--  Database: MongoDB
--  Version Control System: Git
--  VCS Hosting: GitHub
--  Programming / Scripting: JavaScript
--  Front-End: HTML, CSS, EJS
--  Runtime Environment: NodeJS
--  Integrated Development Environment: VSCode
-   <br/>
-   <br/>
+- Library:
+  - cors
+  - dotenv
+  - ejs
+  - express
+  - mongoose
+  - nodemon
+  - express-ejs-layouts
+- Framework: ExpressJS
+- Database: MongoDB
+- Version Control System: Git
+- VCS Hosting: GitHub
+- Programming / Scripting: JavaScript
+- Front-End: HTML, CSS, EJS
+- Runtime Environment: NodeJS
+- Integrated Development Environment: VSCode
+  <br/>
+  <br/>
 
 ## 🔗 Links
 

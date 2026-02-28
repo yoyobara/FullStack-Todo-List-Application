@@ -20,6 +20,9 @@ const cors = require("cors");
 //Requires Dotenv Module
 const dotenv = require("dotenv").config();
 
+// swagger requirements
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swagger.json");
 
 //Use the Cors Module
 app.use(cors());
@@ -35,8 +38,14 @@ app.set("layout extractScripts", true);
 
 //Middleware - URL Encoder
 app.use(express.urlencoded({ extended: true }));
+//Middleware - JSON parser for API requests
+app.use(express.json());
 //Middleware - App calls index.js - Route File, whenever '/' route is called in the request
 app.use("/", route);
+
+// Swagger UI and spec endpoints
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.get("/swagger.json", (req, res) => res.json(swaggerDocument));
 
 //Set Up - Template Engine as EJS
 app.set("view engine", "ejs");
@@ -45,9 +54,9 @@ app.set("views", path.join(__dirname, "views"));
 
 //Run the ExpressJS Server
 app.listen(port, (err) => {
-	if (err) {
-		console.log(err);
-		return;
-	}
-	console.log(`Server is Up & Running Successfully on Port ${port}`);
+  if (err) {
+    console.log(err);
+    return;
+  }
+  console.log(`Server is Up & Running Successfully on Port ${port}`);
 });
