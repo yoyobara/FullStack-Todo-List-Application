@@ -14,8 +14,6 @@ const path = require("path");
 const route = require("./routes/index.js");
 //Requires express-ej-layouts Module
 const expressLayouts = require("express-ejs-layouts");
-//Requires MongoDB
-const db = require("./config/mongoose.js");
 //Requires cors Module
 const cors = require("cors");
 //Requires Dotenv Module

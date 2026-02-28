@@ -12,7 +12,6 @@
 		"url": "git+https://github.com/Ayush-Kanduri/Todo-List-App_BackEnd-MENStack.git"
 	},
 	"keywords": [
-		"mongodb",
 		"nodejs",
 		"expressjs",
 		"todo-list-app"
@@ -29,7 +28,6 @@
 		"ejs": "^3.1.6",
 		"express": "^4.17.3",
 		"express-ejs-layouts": "^2.5.1",
-		"mongoose": "^6.2.4",
 		"nodemon": "^2.0.15",
 		"swagger-ui-express": "^4.6.3"
 	}

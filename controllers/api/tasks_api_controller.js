@@ -12,9 +12,9 @@ function formatDate(input) {
   return `${month} ${date}, ${year}`;
 }
 
-module.exports.listTasks = async (req, res) => {
+module.exports.listTasks = (req, res) => {
   try {
-    const tasks = await Task.find({});
+    const tasks = Task.find({});
     return res.json(tasks);
   } catch (err) {
     console.error("Error fetching tasks", err);
@@ -35,7 +35,7 @@ module.exports.getTask = async (req, res) => {
   }
 };
 
-module.exports.createTask = async (req, res) => {
+module.exports.createTask = (req, res) => {
   try {
     if (
       !req.body.task ||
@@ -46,7 +46,7 @@ module.exports.createTask = async (req, res) => {
       return res.status(400).json({ error: "Missing required fields" });
     }
     const formattedDate = formatDate(req.body.date);
-    const newTask = await Task.create({
+    const newTask = Task.create({
       task: req.body.task,
       description: req.body.description,
       priority: req.body.priority,
@@ -67,9 +67,7 @@ module.exports.updateTask = async (req, res) => {
     if (updates.date) {
       updates.date = formatDate(updates.date);
     }
-    const task = await Task.findByIdAndUpdate(req.params.id, updates, {
-      new: true,
-    });
+    const task = await Task.findByIdAndUpdate(req.params.id, updates);
     if (!task) {
       return res.status(404).json({ error: "Task not found" });
     }
