@@ -10,23 +10,28 @@ services:
     environment:
       ENVIRONMENT: production
       DEPLOYMENT: other
-      DB: mongodb://root:password@mongodb:27017
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: password
       DB_NAME: todo_list
       PORT: 8000
       HOST: "0.0.0.0"
     depends_on:
-      - mongodb
+      - postgres
 
-  mongodb:
-    image: mongo:latest
-    container_name: todo-list-mongodb
+  postgres:
+    image: postgres:15-alpine
+    container_name: todo-list-postgres
     restart: always
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: password
-      MONGO_INITDB_DATABASE: todo_list
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: todo_list
     volumes:
-      - mongodb_data:/data/db
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
 
 volumes:
-  mongodb_data:
+  postgres_data:

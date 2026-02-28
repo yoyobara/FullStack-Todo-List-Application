@@ -1,35 +1,48 @@
-//Create the same instance of mongoose which is used in the MongoDB configuration inside config
-const mongoose = require("mongoose");
+// Require Sequelize
+const { DataTypes } = require("sequelize");
 
-//Create the DB Schema
-const taskSchema = new mongoose.Schema({
-	task: {
-		type: String,
-		required: true,
-	},
-	description: {
-		type: String,
-	},
-	priority: {
-		type: String,
-		required: true,
-	},
-	category: {
-		type: String,
-		required: true,
-	},
-	date: {
-		type: String,
-		required: true,
-	},
-	completed: {
-		type: Boolean,
-		default: false,
-	},
-});
+// Require the Sequelize instance
+const sequelize = require("../config/sequelize");
 
-//Create a Model/Collection to populate the data with the same name for the schema in the DB
-const Task = mongoose.model("Task", taskSchema);
+// Define the Task model
+const Task = sequelize.define(
+  "Task",
+  {
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
+    },
+    task: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    description: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    priority: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    category: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    date: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    completed: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
+  },
+  {
+    timestamps: true,
+    tableName: "tasks",
+  },
+);
 
-//Export the Model/Collection
+// Export the Task model
 module.exports = Task;

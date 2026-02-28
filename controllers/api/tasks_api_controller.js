@@ -14,7 +14,7 @@ function formatDate(input) {
 
 module.exports.listTasks = async (req, res) => {
   try {
-    const tasks = await Task.find({});
+    const tasks = await Task.findAll();
     return res.json(tasks);
   } catch (err) {
     console.error("Error fetching tasks", err);
@@ -24,7 +24,7 @@ module.exports.listTasks = async (req, res) => {
 
 module.exports.getTask = async (req, res) => {
   try {
-    const task = await Task.findById(req.params.id);
+    const task = await Task.findByPk(req.params.id);
     if (!task) {
       return res.status(404).json({ error: "Task not found" });
     }
@@ -67,12 +67,11 @@ module.exports.updateTask = async (req, res) => {
     if (updates.date) {
       updates.date = formatDate(updates.date);
     }
-    const task = await Task.findByIdAndUpdate(req.params.id, updates, {
-      new: true,
-    });
+    const task = await Task.findByPk(req.params.id);
     if (!task) {
       return res.status(404).json({ error: "Task not found" });
     }
+    await task.update(updates);
     return res.json(task);
   } catch (err) {
     console.error("Error updating task", err);
@@ -82,10 +81,11 @@ module.exports.updateTask = async (req, res) => {
 
 module.exports.deleteTask = async (req, res) => {
   try {
-    const task = await Task.findByIdAndDelete(req.params.id);
+    const task = await Task.findByPk(req.params.id);
     if (!task) {
       return res.status(404).json({ error: "Task not found" });
     }
+    await task.destroy();
     return res.status(204).send();
   } catch (err) {
     console.error("Error deleting task", err);

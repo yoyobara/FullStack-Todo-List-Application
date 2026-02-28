@@ -14,8 +14,8 @@ const path = require("path");
 const route = require("./routes/index.js");
 //Requires express-ej-layouts Module
 const expressLayouts = require("express-ejs-layouts");
-//Requires MongoDB
-const db = require("./config/mongoose.js");
+//Requires Sequelize
+const sequelize = require("./config/sequelize.js");
 //Requires cors Module
 const cors = require("cors");
 //Requires Dotenv Module
@@ -53,11 +53,20 @@ app.set("view engine", "ejs");
 //Set Up - Template Engine Views Folder Path (..../views)
 app.set("views", path.join(__dirname, "views"));
 
-//Run the ExpressJS Server
-app.listen(port, host, (err) => {
-  if (err) {
-    console.log(err);
-    return;
-  }
-  console.log(`Server is Up & Running Successfully on Port ${port}`);
-});
+// Sync Database and Run the ExpressJS Server
+sequelize
+  .sync({ alter: true })
+  .then(() => {
+    console.log("Database synced successfully");
+    app.listen(port, host, (err) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      console.log(`Server is Up & Running Successfully on Port ${port}`);
+    });
+  })
+  .catch((err) => {
+    console.error("Database sync error:", err);
+    process.exit(1);
+  });

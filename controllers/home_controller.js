@@ -2,61 +2,75 @@
 const Task = require("../models/task");
 
 //Export the Home Controller's home() Function
-module.exports.home = (req, res) => {
-	let count = 0;
-	Task.find({}, (err, taskList) => {
-		if (err) {
-			console.log("Error in fetching the tasks from DB");
-			return;
-		}
-		taskList.forEach((task) => {
-			if (!task.completed) {
-				count++;
-			}
-		});
-		return res.render("all-tasks", {
-			title: "Home Page",
-			task_list: taskList,
-			count: count,
-		});
-	});
+module.exports.home = async (req, res) => {
+  try {
+    let count = 0;
+    const taskList = await Task.findAll();
+    taskList.forEach((task) => {
+      if (!task.completed) {
+        count++;
+      }
+    });
+    return res.render("all-tasks", {
+      title: "Home Page",
+      task_list: taskList,
+      count: count,
+    });
+  } catch (err) {
+    console.log("Error in fetching the tasks from DB:", err);
+    return res.render("all-tasks", {
+      title: "Home Page",
+      task_list: [],
+      count: 0,
+    });
+  }
 };
 
 //Export the Home Controller's incompleteTasks() Function
-module.exports.incompleteTasks = (req, res) => {
-	Task.find({ completed: false }, (err, taskList) => {
-		if (err) {
-			console.log("Error in fetching the tasks from DB");
-			return;
-		}
-		return res.render("incomplete-tasks", {
-			title: "Incomplete Tasks",
-			task_list: taskList,
-			count: taskList.length,
-		});
-	});
+module.exports.incompleteTasks = async (req, res) => {
+  try {
+    const taskList = await Task.findAll({
+      where: { completed: false },
+    });
+    return res.render("incomplete-tasks", {
+      title: "Incomplete Tasks",
+      task_list: taskList,
+      count: taskList.length,
+    });
+  } catch (err) {
+    console.log("Error in fetching the tasks from DB:", err);
+    return res.render("incomplete-tasks", {
+      title: "Incomplete Tasks",
+      task_list: [],
+      count: 0,
+    });
+  }
 };
 
 //Export the Home Controller's completedTasks() Function
-module.exports.completedTasks = (req, res) => {
-	let count = 0;
-	const arr = [];
-	Task.find({}, (err, taskList) => {
-		if (err) {
-			console.log("Error in fetching the tasks from DB");
-			return;
-		}
-		taskList.forEach((task) => {
-			if (!task.completed) {
-				count++;
-			} else {
-				arr.push(task);
-			}
-		});
-		return res.render("completed-tasks", {
-			title: "Completed Tasks",
-			task_list: arr,
-			count: count,
-		});
-	});
+module.exports.completedTasks = async (req, res) => {
+  try {
+    let count = 0;
+    const arr = [];
+    const taskList = await Task.findAll();
+    taskList.forEach((task) => {
+      if (!task.completed) {
+        count++;
+      } else {
+        arr.push(task);
+      }
+    });
+    return res.render("completed-tasks", {
+      title: "Completed Tasks",
+      task_list: arr,
+      count: count,
+    });
+  } catch (err) {
+    console.log("Error in fetching the tasks from DB:", err);
+    return res.render("completed-tasks", {
+      title: "Completed Tasks",
+      task_list: [],
+      count: 0,
+    });
+  }
 };
