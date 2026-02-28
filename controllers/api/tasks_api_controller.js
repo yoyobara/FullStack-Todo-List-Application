@@ -12,9 +12,9 @@ function formatDate(input) {
   return `${month} ${date}, ${year}`;
 }
 
-module.exports.listTasks = (req, res) => {
+module.exports.listTasks = async (req, res) => {
   try {
-    const tasks = Task.find({});
+    const tasks = await Task.find({});
     return res.json(tasks);
   } catch (err) {
     console.error("Error fetching tasks", err);
@@ -35,7 +35,7 @@ module.exports.getTask = async (req, res) => {
   }
 };
 
-module.exports.createTask = (req, res) => {
+module.exports.createTask = async (req, res) => {
   try {
     if (
       !req.body.task ||
@@ -46,7 +46,7 @@ module.exports.createTask = (req, res) => {
       return res.status(400).json({ error: "Missing required fields" });
     }
     const formattedDate = formatDate(req.body.date);
-    const newTask = Task.create({
+    const newTask = await Task.create({
       task: req.body.task,
       description: req.body.description,
       priority: req.body.priority,
