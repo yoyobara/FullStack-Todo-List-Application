@@ -132,7 +132,7 @@
           "name": "id",
           "in": "path",
           "required": true,
-          "description": "The unique identifier (MongoDB ObjectId) of the task",
+          "description": "The unique identifier of the task",
           "schema": {
             "type": "string",
             "example": "507f1f77bcf86cd799439011"
@@ -273,7 +273,7 @@
         "properties": {
           "_id": {
             "type": "string",
-            "description": "MongoDB unique identifier for the task",
+            "description": "Unique identifier for the task",
             "example": "507f1f77bcf86cd799439011"
           },
           "task": {
