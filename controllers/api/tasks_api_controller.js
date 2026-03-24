@@ -67,9 +67,7 @@ module.exports.updateTask = async (req, res) => {
     if (updates.date) {
       updates.date = formatDate(updates.date);
     }
-    const task = await Task.findByIdAndUpdate(req.params.id, updates, {
-      new: true,
-    });
+    const task = await Task.findByIdAndUpdate(req.params.id, updates);
     if (!task) {
       return res.status(404).json({ error: "Task not found" });
     }

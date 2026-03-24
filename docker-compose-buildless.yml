@@ -8,25 +8,5 @@ services:
     ports:
       - "8000:8000"
     environment:
-      ENVIRONMENT: production
-      DEPLOYMENT: other
-      DB: mongodb://root:password@mongodb:27017
-      DB_NAME: todo_list
       PORT: 8000
       HOST: "0.0.0.0"
-    depends_on:
-      - mongodb
-
-  mongodb:
-    image: mongo:latest
-    container_name: todo-list-mongodb
-    restart: always
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: password
-      MONGO_INITDB_DATABASE: todo_list
-    volumes:
-      - mongodb_data:/data/db
-
-volumes:
-  mongodb_data:
